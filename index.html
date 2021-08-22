@@ -9,8 +9,11 @@
     <title>Weather App</title>
 </head>
 <body>
+<form action="City Selection" class="submitform">
+    <input type="text" name="City" id="citybox">
+    <button id="submitbutton">Select City</button>
+</form>
     <section class="d-flex justify-content-center">
-        <button class="mt-3" id="weatherBtn">Get your weather <br> (Please enable browser geolocation before you click!)</button>
         <ul class="justify-content-space-between" id="weatherCards">
             <li class="list-group-item mt-3 border rounded-3 bg-secondary text-center" id="card">
                 <h4 id="day0"></h4>

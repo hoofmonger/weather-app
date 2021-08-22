@@ -3,7 +3,7 @@ function getWeatherInfo() {
 
     console.log("working");
     let lat, lon;
-    let cityName = "London"
+    //let cityName = ""
     let apiKey = "6931e3310fbaabb5b6a7c83dc3e87fa0";
     let queryUrl1 = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&appid=${apiKey}`;
     let queryUrl0 = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`
@@ -42,7 +42,15 @@ function getWeatherInfo() {
         });
 }
 
+let cityEntryBox = document.querySelector("#citybox")
+let citySubmitButton = document.querySelector("#submitbutton")
 
+citySubmitButton.addEventListener("click", submitCity)
+
+function submitCity (){
+cityName.textContent = cityEntryBox.textContent
+console.log(cityName)
+}
 
 
 
@@ -101,6 +109,6 @@ function renderWeather(weatherData) {
     document.getElementById("weatherCards").style.display = "flex";
     document.getElementById("weatherBtn").style.display = "none";
 }
-renderWeather()
+//renderWeather()
 
-getWeatherInfo()
+//getWeatherInfo()
