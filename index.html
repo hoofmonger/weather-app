@@ -5,17 +5,52 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/style/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Weather App</title>
 </head>
 <body>
-    
+    <section class="d-flex justify-content-center">
+        <button class="mt-3" id="weatherBtn">Get your weather <br> (Please enable browser geolocation before you click!)</button>
+        <ul class="justify-content-space-between" id="weatherCards">
+            <li class="list-group-item mt-3 border rounded-3 bg-secondary text-center" id="card">
+                <h4 id="day0"></h4>
+                <p class="m-0" id="date0"></p>
+                <p class="m-0" id="icon0">Image</p>
+                <h4 id=temp0></h4>
+            </li>
+            <li class="list-group-item mt-3 border rounded-3 bg-secondary text-center" id="card">
+                <h4 id="day1"></h4>
+                <p class="m-0" id="date1"></p>
+                <p class="m-0" id="icon1">Image</p>
+                <h4 id="temp1"></h4>
+            </li>
+            <li class="list-group-item mt-3 border rounded-3 bg-secondary text-center" id="card">
+                <h4 id="day2"></h4>
+                <p class="m-0" id="date2"></p>
+                <p class="m-0" id="icon2">Image</p>
+                <h4 id="temp2"></h4>
+            </li>
+            <li class="list-group-item mt-3 border rounded-3 bg-secondary text-center" id="card">
+                <h4 id="day3"></h4>
+                <p class="m-0" id="date3"></p>
+                <p class="m-0" id="icon3">Image</p>
+                <h4 id="temp3"></h4>
+            </li>
+            <li class="list-group-item mt-3 border rounded-3 bg-secondary text-center" id="card">
+                <h4 id="day4"></h2>
+                <p class="m-0" id="date4"></p>
+                <p class="m-0" id="icon4">Image</p>
+                <h4 id="temp4"></h4>
+            </li>
+        </ul>
+    </section>
 
 
 
 
 
 
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="./assets/script/script.js"></script>
 </body>
 </html>
