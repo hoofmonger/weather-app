@@ -1,11 +1,13 @@
+let cityName = ""
+
 function getWeatherInfo() {
     
 
     console.log("working");
     let lat, lon;
-    //let cityName = ""
+    
     let apiKey = "6931e3310fbaabb5b6a7c83dc3e87fa0";
-    let queryUrl1 = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&appid=${apiKey}`;
+    
     let queryUrl0 = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`
     
     fetch(queryUrl0)
@@ -17,14 +19,15 @@ function getWeatherInfo() {
                     lat = data.coord.lat;
                     lon = data.coord.lon;
                     console.log(lat, lon);
+                    return data
                 })
         }
     })
-    .catch(error => {
+    //.catch(error => {
 
-        console.log(error);
-    });
-
+      //  console.log(error);
+   // });
+let queryUrl1 = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&appid=${apiKey}`;
 
     fetch(queryUrl1)
         .then(response => {
@@ -47,9 +50,12 @@ let citySubmitButton = document.querySelector("#submitbutton")
 
 citySubmitButton.addEventListener("click", submitCity)
 
-function submitCity (){
-cityName.textContent = cityEntryBox.textContent
-console.log(cityName)
+function submitCity (event){
+event.preventDefault();
+cityName = cityEntryBox.value;
+getWeatherInfo();
+renderWeather();
+console.log(cityName);
 }
 
 
@@ -109,6 +115,5 @@ function renderWeather(weatherData) {
     document.getElementById("weatherCards").style.display = "flex";
     document.getElementById("weatherBtn").style.display = "none";
 }
-//renderWeather()
 
-//getWeatherInfo()
+
