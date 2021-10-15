@@ -1,119 +1,74 @@
-let cityName = ""
+
+let lat, lon;
+
+let cityEntryBox = document.querySelector("#citybox");
+let citySubmitButton = document.querySelector("#submitbutton");
+let cityName = cityEntryBox.value;
+citySubmitButton.addEventListener("click", submitCity);
+let currentWeather = document.querySelector("#currentWeather");
+let forecast = document.querySelector("#forecast");
 
 function getWeatherInfo() {
-    
+  console.log("working");
+  cityName = cityEntryBox.value
 
-    console.log("working");
-    let lat, lon;
-    
-    let apiKey = "6931e3310fbaabb5b6a7c83dc3e87fa0";
-    
-    let queryUrl0 = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`
-    
-    fetch(queryUrl0)
-    .then(response => {
-        if (response.ok) {
-            response.json()
-                .then(data => {
-                    console.log(data);
-                    lat = data.coord.lat;
-                    lon = data.coord.lon;
-                    console.log(lat, lon);
-                    return data
-                })
-        }
-    })
-    //.catch(error => {
+  let apiKey = "6931e3310fbaabb5b6a7c83dc3e87fa0";
 
-      //  console.log(error);
-   // });
-let queryUrl1 = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&appid=${apiKey}`;
+  let queryUrl0 = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`;
 
-    fetch(queryUrl1)
-        .then(response => {
-            if (response.ok) {
-                response.json()
-                    .then(data => {
-                        console.log(data);
-                        renderWeather(data);
-                    })
-            }
-        })
-        .catch(error => {
+  fetch(queryUrl0)
+    .then((response) => {
+      if (response.ok) {
+        response.json().then((data) => {
+          console.log(data);
+          lat = data.coord.lat;
+          lon = data.coord.lon;
+          console.log(lat, lon);
+          let queryUrl1 = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&appid=${apiKey}&units=imperial`;
 
-            console.log(error);
+          fetch(queryUrl1)
+            .then((response) => {
+              if (response.ok) {
+                response.json().then((data) => {
+                  console.log(data);
+                  renderCurrentWeather(data);
+                  for(let i = 0; i <5; i++){
+                      renderForecast(data.daily[i])
+                  }
+                });
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+function submitCity(event) {
+  event.preventDefault();
+
+  getWeatherInfo();
+  console.log(cityName);
 }
 
-let cityEntryBox = document.querySelector("#citybox")
-let citySubmitButton = document.querySelector("#submitbutton")
-
-citySubmitButton.addEventListener("click", submitCity)
-
-function submitCity (event){
-event.preventDefault();
-cityName = cityEntryBox.value;
-getWeatherInfo();
-renderWeather();
-console.log(cityName);
+function renderCurrentWeather(data) {
+  let h1 = document.createElement("h1");
+  let pTagTemp = document.createElement("p");
+  h1.innerText = cityName;
+  pTagTemp.innerText = `temp: ${data.current.temp}`;
+  currentWeather.append(h1, pTagTemp)
 }
 
-
-
-
-function renderWeather(weatherData) {
-
-    let weatherArray = [
-        {
-            day: "0",
-            icon: "",
-            temp: "",
-        },
-        {
-            day: "1",
-            icon: "",
-            temp: "",
-        },
-        {
-            day: "2",
-            icon: "",
-            temp: "",
-        },
-        {
-            day: "3",
-            icon: "",
-            temp: "",
-        },
-        {
-            day: "4",
-            icon: "",
-            temp: "",
-        }];
-
-    for (let i = 0; i < weatherArray.length; i++) {
-        weatherArray[i].icon = weatherData.daily[i].weather["0"].icon;
-        weatherArray[i].temp = Math.round(((weatherData.daily[i].temp.day - 273.15) * (9 / 5)) + 32);
-
-        let updateDay = document.getElementById(`day${i}`);
-        let updateDate = document.getElementById(`date${i}`);
-        let udpateIcon = document.getElementById(`icon${i}`);
-        let updateTemp = document.getElementById(`temp${i}`);
-
-        if (i === 0) {
-            updateDay.textContent = moment().format('ddd');
-            updateDate.textContent = moment().format('M/D');
-        }
-        else {
-            updateDay.textContent = moment().add(i, 'days').format('ddd');
-            updateDate.textContent = moment().add(i, 'days').format('M/D');
-        }
-
-        udpateIcon.innerHTML = `<img src="http://openweathermap.org/img/wn/${weatherArray[i].icon}@2x.png" alt="current weather icon">`;
-        updateTemp.textContent = `${weatherArray[i].temp}°F`;
-    }
-
-    document.getElementById("weatherCards").style.display = "flex";
-    document.getElementById("weatherBtn").style.display = "none";
+function renderForecast(data){
+    let container = document.createElement('div')
+    let pTagTemp = document.createElement('p')
+    pTagTemp.innerText = data.temp.day
+    container.append(pTagTemp)
+    forecast.append(container)
 }
 
-
+submitCity();
